@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.intertect.usernameapp.dto.UsernameValidationResult;
 import com.intertect.usernameapp.service.UsernameValidator;
+import com.intertect.usernameapp.service.exception.ServiceException;
 
 @Component
 @ManagedBean
@@ -45,18 +46,25 @@ public class UsernameFormBean {
 	}
 	
 	public void checkUsername () {
-		UsernameValidationResult result = usernameValidator.validate(username);
-		invalid = !result.isValid();
-		suggestedUsernames = result.getSuggestedUsernames();
-		
-		if (result.isValid()) {
-			message = "The username is valid.";
+		try {
+			UsernameValidationResult result = usernameValidator.validate(username);
+			invalid = !result.isValid();
+			suggestedUsernames = result.getSuggestedUsernames();
+			
+			if (result.isValid()) {
+				message = "The username is valid.";
+			}
+			else if (suggestedUsernames.isEmpty()) {
+				message = "There are not suggested usernames, it might contain a restricted word.";
+			}
+			else {
+				message = "The user is already taken, below there are some suggestions:";
+			}
 		}
-		else if (suggestedUsernames.isEmpty()) {
-			message = "There are not suggested usernames, it might contain a restricted word.";
-		}
-		else {
-			message = "The user is already taken, below there are some suggestions:";
+		catch (ServiceException e ) {
+			invalid = true;
+			suggestedUsernames = null;
+			message = e.getMessage();
 		}
 	}
 	

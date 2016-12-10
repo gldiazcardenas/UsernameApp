@@ -34,6 +34,10 @@ public class UsernameValidatorImpl implements UsernameValidator {
 			throw new ServiceException("The username must be at least 6 characters long!");
 		}
 		
+		if (restrictedWordService.containsRestrictedWord(username)) {
+			throw new ServiceException("The username contains a restricted word!");
+		}
+		
 		UsernameValidationResult result = new UsernameValidationResult(true);
 		
 		if (userService.isTakenUsername(username)) {

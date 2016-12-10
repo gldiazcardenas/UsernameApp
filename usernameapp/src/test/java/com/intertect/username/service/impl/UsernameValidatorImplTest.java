@@ -83,9 +83,10 @@ public class UsernameValidatorImplTest {
 	@Test
 	public void testInvalidTakenUsername_ContainsRestrictedWord () {
 		String username = "gabriel";
+		String suggested = "gabriel_01";
 		when(userService.isTakenUsername(eq(username))).thenReturn(true);
 		when(usernameGenerator.suggestUsername(any(String.class))).thenReturn("gabriel_01");
-		when(restrictedWordService.containsRestrictedWord(any(String.class))).thenReturn(true);
+		when(restrictedWordService.containsRestrictedWord(eq(suggested))).thenReturn(true);
 		
 		UsernameValidationResult result = validator.validate(username);
 		
