@@ -1,5 +1,9 @@
 package com.intertect.usernameapp.dao;
 
-public interface RestrictedWordDAO {
+import com.intertect.usernameapp.model.RestrictedWord;
+
+public interface RestrictedWordDAO extends EntityDAO<RestrictedWord, Long> {
+	
+	public boolean containsRestrictedWord (String username);
 
 }

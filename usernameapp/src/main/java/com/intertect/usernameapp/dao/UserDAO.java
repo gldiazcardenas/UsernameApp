@@ -1,5 +1,9 @@
 package com.intertect.usernameapp.dao;
 
-public interface UserDAO {
+import com.intertect.usernameapp.model.User;
+
+public interface UserDAO extends EntityDAO<User, Long> {
+	
+	public boolean isTakenUsername (String username);
 
 }

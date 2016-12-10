@@ -3,17 +3,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<title>Username App</title>
 </h:head>
 <h:body>
-	<h1>Username App</h1>
+	<h1>Enter username</h1>
 
 	<h:form>
-		<p:inputText />
+		<h:panelGrid columns="3">
+			<h:inputText label="Username" value="#{usernameFormBean.username}" required="true">
+				<f:validateLength minimum="6" />
+			</h:inputText>
+			
+			<h:commandButton value="Validate" type="submit" action="#{usernameFormBean.checkUsername}" />
+			<h:commandButton value="Reset" type="reset" />
+			
+			<h:message for="" style="color:red; margin:8px;"></h:message>
+		</h:panelGrid>
+		
+		<h:panelGrid columns="1" rendered="#{usernameFormBean.invalid}">
+			<h4>The user is already taken, below there are some suggestions:</h4>
+			<ul>
+				<ui:repeat var="suggestedUsername" value="#{usernameFormBean.suggestedUsernames}">
+					<li><h:outputLabel value="#{suggestedUsername}"/></li>
+				</ui:repeat>
+			</ul>
+		</h:panelGrid>
+		
 	</h:form>
 
 </h:body>
