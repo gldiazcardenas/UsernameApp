@@ -11,23 +11,29 @@ public class RestrictedWordDAOImpl extends EntityDAOImpl<RestrictedWord, Long> i
 	private static long nextval = 1;
 	
 	public RestrictedWordDAOImpl() {
-		RestrictedWord word = new RestrictedWord();
+		RestrictedWord word;
 		
+		word = new RestrictedWord();
 		word.setWord("cannabis");
 		persist(word);
 		
+		word = new RestrictedWord();
 		word.setWord("abuse");
 		persist(word);
 		
+		word = new RestrictedWord();
 		word.setWord("crack");
 		persist(word);
 		
+		word = new RestrictedWord();
 		word.setWord("damn");
 		persist(word);
 		
+		word = new RestrictedWord();
 		word.setWord("drunk");
 		persist(word);
 		
+		word = new RestrictedWord();
 		word.setWord("grass");
 		persist(word);
 	}

@@ -8,9 +8,10 @@ import com.intertect.usernameapp.service.UsernameGenerator;
 public class UsernameGeneratorImpl implements UsernameGenerator {
 	
 	private static int consecutive = 1;
-
+	
 	@Override
 	public String suggestUsername(String username) {
+		// TODO Implement some strategy to generate better user names
 		return username + "_" + consecutive++;
 	}
 

@@ -13,6 +13,7 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
 	@Autowired
 	private UserDAO dao;
 	
+	@Override
 	public boolean isTakenUsername(String username) {
 		return dao.isTakenUsername(username);
 	}

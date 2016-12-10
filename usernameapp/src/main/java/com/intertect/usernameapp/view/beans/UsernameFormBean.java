@@ -20,6 +20,7 @@ public class UsernameFormBean {
 	private UsernameValidator usernameValidator;
 	
 	private String username;
+	private String message;
 	private boolean invalid;
 	private List<String> suggestedUsernames;
 	
@@ -39,10 +40,31 @@ public class UsernameFormBean {
 		return invalid;
 	}
 	
+	public String getMessage() {
+		return message;
+	}
+	
 	public void checkUsername () {
 		UsernameValidationResult result = usernameValidator.validate(username);
 		invalid = !result.isValid();
 		suggestedUsernames = result.getSuggestedUsernames();
+		
+		if (result.isValid()) {
+			message = "The username is valid.";
+		}
+		else if (suggestedUsernames.isEmpty()) {
+			message = "There are not suggested usernames, it might contain a restricted word.";
+		}
+		else {
+			message = "The user is already taken, below there are some suggestions:";
+		}
+	}
+	
+	public void clear () {
+		username = null;
+		suggestedUsernames = null;
+		message = null;
+		invalid = false;
 	}
 	
 }

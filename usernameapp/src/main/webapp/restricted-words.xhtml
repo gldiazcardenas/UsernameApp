@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Username App</title>
+</h:head>
+<h:body>
+	<div align="right">
+		<h:outputLink value="index.xhtml" style="padding: 5px;">Back</h:outputLink>
+	</div>
+
+	<h1>Restricted Words</h1>
+
+	<h:form>
+		<h:panelGrid columns="2">
+			<h:inputText label="Restricted Word" id="word" value="#{restrictedWordFormBean.word}" required="true"/>
+			<h:commandButton value="Add" action="#{restrictedWordFormBean.add}"/>
+			<h:message for="word" style="color:red; margin:8px;" />
+		</h:panelGrid>
+		
+	</h:form>
+	
+	<h:form>
+		<h:dataTable value="#{restrictedWordFormBean.restrictedWords}" var="word" border="1">
+			<h:column>
+				<f:facet name="header">Restricted Word</f:facet>
+				<h:outputLabel value="#{word.word}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Action</f:facet>
+				<h:commandLink value="x" action="#{restrictedWordFormBean.remove(word)}" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+
+</h:body>
+</html>

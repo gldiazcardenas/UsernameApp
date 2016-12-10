@@ -13,6 +13,7 @@ public class RestrictedWordServiceImpl extends EntityServiceImpl<RestrictedWord,
 	@Autowired
 	private RestrictedWordDAO dao;
 
+	@Override
 	public boolean containsRestrictedWord(String username) {
 		return dao.containsRestrictedWord(username);
 	}

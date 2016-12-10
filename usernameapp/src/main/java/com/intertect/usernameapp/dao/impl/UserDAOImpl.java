@@ -11,17 +11,21 @@ public class UserDAOImpl extends EntityDAOImpl<User, Long> implements UserDAO {
 	private static long nextval = 1;
 	
 	public UserDAOImpl() {
-		User user = new User();
+		User user;
 		
+		user = new User();
 		user.setUsername("Gabriel");
 		persist(user);
 		
+		user = new User();
 		user.setUsername("Leonardo");
 		persist(user);
 		
+		user = new User();
 		user.setUsername("gldiazcardenas");
 		persist(user);
 		
+		user = new User();
 		user.setUsername("intertect");
 		persist(user);
 	}

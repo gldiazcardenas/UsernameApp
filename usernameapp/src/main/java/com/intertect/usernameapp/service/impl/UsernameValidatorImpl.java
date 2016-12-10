@@ -1,5 +1,8 @@
 package com.intertect.usernameapp.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +15,10 @@ import com.intertect.usernameapp.service.exception.ServiceException;
 
 @Component
 public class UsernameValidatorImpl implements UsernameValidator {
+	
+	public static final int MINIMUM_SIZE = 14;
+	
+	public static final int NUMBER_OF_ATTEMPTS = 3;
 	
 	@Autowired
 	private UserService userService;
@@ -30,21 +37,27 @@ public class UsernameValidatorImpl implements UsernameValidator {
 		UsernameValidationResult result = new UsernameValidationResult(true);
 		
 		if (userService.isTakenUsername(username)) {
-			result.setValid(false);
+			List<String> suggestedUsernames = new ArrayList<String>();
 			
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 14; j++) {
-					String suggestedUsername = usernameGenerator.suggestUsername(username);
+			for (int i = 0; i < NUMBER_OF_ATTEMPTS; i++) {
+				for (int j = 0; j < MINIMUM_SIZE; j++) {
+					String suggested = usernameGenerator.suggestUsername(username);
 					
-					if (!restrictedWordService.containsRestrictedWord(suggestedUsername)) {
-						result.addSuggestedUsername(suggestedUsername);
+					if (!restrictedWordService.containsRestrictedWord(suggested) && 
+						!userService.isTakenUsername(suggested) && 
+						!suggestedUsernames.contains(suggested)) {
+						
+						suggestedUsernames.add(suggested);
 					}
 				}
 				
-				if (result.getSuggestedUsernamesSize() == 14) {
+				if (suggestedUsernames.size() == MINIMUM_SIZE) {
 					break;
 				}
 			}
+			
+			result.setValid(false);
+			result.setSuggestedUsernames(suggestedUsernames);
 		}
 		
 		return result;
